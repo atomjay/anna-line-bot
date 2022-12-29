@@ -9,7 +9,7 @@ const request = require("request");
 const config = {
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
   channelSecret: process.env.CHANNEL_SECRET,
-  openAiApiKey:process.env.OPENAIA_API_KEY,
+  openAiApiKey:process.env.OPENAI_API_KEY,
 };
 
 // create LINE SDK client
