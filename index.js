@@ -2,6 +2,8 @@ require("dotenv").config();
 
 const line = require("@line/bot-sdk");
 const express = require("express");
+const { OpenAIApi } = require("openai");
+const request = require("request");
 
 // create LINE SDK config from env variables
 const config = {
@@ -34,11 +36,45 @@ function handleEvent(event) {
     return Promise.resolve(null);
   }
 
-  // create a echoing text message
-  const echo = { type: "text", text: event.message.text };
+  //   // create a echoing text message
+  //   const echo = { type: "text", text: event.message.text };
 
-  // use reply API
-  return client.replyMessage(event.replyToken, echo);
+  //   // use reply API
+  //   return client.replyMessage(event.replyToken, echo);
+  // 將用戶傳送文字使用OpenAI 的 API 處理
+  return new Promise((resolve, reject) => {
+    request.post(
+      {
+        url: "https://api.openai.com/v1/completions",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        },
+        json: {
+          model: "text-davinci-003",
+          prompt: event.message.text,
+          temperature: 0.7,
+          max_tokens: 1000,
+          top_p: 1,
+          frequency_penalty: 0,
+          presence_penalty: 0,
+        },
+      },
+      (error, response, body) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(
+            bot,
+            replyMessage(event.replyToken, {
+              type: "text",
+              text: body.choices[0].text,
+            })
+          );
+        }
+      }
+    );
+  });
 }
 
 // listen on port
