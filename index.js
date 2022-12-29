@@ -63,7 +63,8 @@ function handleEvent(event) {
           resolve(
             bot.replyMessage(event.replyToken, {
               type: "text",
-              text: body.choices[0].text,
+              text:body.text,
+            //   text: body.choices[0].text,
             })
           );
         }
