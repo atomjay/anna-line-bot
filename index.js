@@ -59,6 +59,7 @@ function handleEvent(event) {
         if (error) {
           reject(error);
         } else {
+            console.log(body);
           // Reply message to user from chatbot
           resolve(
             bot.replyMessage(event.replyToken, {
