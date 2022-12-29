@@ -29,19 +29,12 @@ app.post("/callback", line.middleware(config), (req, res) => {
     });
 });
 
-// event handler
 function handleEvent(event) {
   if (event.type !== "message" || event.message.type !== "text") {
-    // ignore non-text-message event
     return Promise.resolve(null);
   }
 
-  //   // create a echoing text message
-  //   const echo = { type: "text", text: event.message.text };
-
-  //   // use reply API
-  //   return client.replyMessage(event.replyToken, echo);
-  // 將用戶傳送文字使用OpenAI 的 API 處理
+  // use openai
   return new Promise((resolve, reject) => {
     request.post(
       {
@@ -64,9 +57,9 @@ function handleEvent(event) {
         if (error) {
           reject(error);
         } else {
+          // Reply message to user from chatbot
           resolve(
-            bot,
-            replyMessage(event.replyToken, {
+            bot.replyMessage(event.replyToken, {
               type: "text",
               text: body.choices[0].text,
             })
