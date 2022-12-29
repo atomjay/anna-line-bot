@@ -13,7 +13,7 @@ const config = {
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 // create LINE SDK client
-const client = new line.Client(config);
+const bot = new line.Client(config);
 
 // create Express app
 // about Express itself: https://expressjs.com/
@@ -43,7 +43,7 @@ function handleEvent(event) {
         url: "https://api.openai.com/v1/completions",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${OPENAI_API_KEY}`,
+          "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
         },
         json: {
           model: "text-davinci-003",
