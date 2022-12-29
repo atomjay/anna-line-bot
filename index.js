@@ -11,7 +11,7 @@ const config = {
   channelSecret: process.env.CHANNEL_SECRET,
 };
 
-const openAiApiKey = process.env.OPENAI_API_KEY;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 // create LINE SDK client
 const client = new line.Client(config);
 
@@ -43,7 +43,7 @@ function handleEvent(event) {
         url: "https://api.openai.com/v1/completions",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${openAiApiKey}`,
+          "Authorization": `Bearer ${OPENAI_API_KEY}`,
         },
         json: {
           model: "text-davinci-003",
