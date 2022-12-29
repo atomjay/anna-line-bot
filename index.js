@@ -37,6 +37,7 @@ function handleEvent(event) {
 
   // use openai
   return new Promise((resolve, reject) => {
+    console.log('here');
     request.post(
       {
         url: "https://api.openai.com/v1/completions",
